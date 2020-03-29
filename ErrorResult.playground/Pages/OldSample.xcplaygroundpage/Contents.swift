@@ -1,6 +1,24 @@
+//: [Previous](@previous)
+
 struct E: Error {}
 
-// failure
+//: ## Success
+
+func fuga() throws -> Int {
+    return 1
+}
+
+let fugaR = Result { try fuga() }
+    .mapError { $0 as! E }
+
+switch fugaR {
+case .success(let i):
+    print("success: \(i)")
+case .failure(let e):
+    print("failure: \(e)")
+}
+
+//: ## Failure
 
 func hoge() throws -> Int {
     throw E()
@@ -16,18 +34,4 @@ case .failure(let e):
     print("failure: \(e)")
 }
 
-// success
-
-func fuga() throws -> Int {
-    return 1
-}
-
-let fugaR = Result { try fuga() }
-    .mapError { $0 as! E }
-
-switch fugaR {
-case .success(let i):
-    print("success: \(i)")
-case .failure(let e):
-    print("failure: \(e)")
-}
+//: [Next](@next)
